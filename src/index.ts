@@ -65,36 +65,6 @@ fs.readFile(args.config, { encoding: "utf8" }, async (err, config) => {
     cache: Models.Cache.migration,
   });
   const cache = new Models.Cache.CacheService(database);
-
-  /*
-  const key = new NodeRSA(
-    `-----BEGIN PUBLIC KEY-----
-  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo/2XDqy6oUVBEFj84639
-  h6MnpoGAFuGGJ08SHbxa7EQXb9mitymA8FN/qWUmCnZzNyuL6Owi6CKJ3OmGdsFK
-  p3j6mvAZwqI+wuQ6tGVblA/XL3Xw00U2vAdo1fc+HRDZUe54M+RdJTV0ZWuYoh+5
-  FIKSVys6CuY0ObfTfaUjSnXGh0HE7Ow9vqPp2Fh4oB5lTjnL17yFLpVrvbFd8S+Y
-  0TTBSBo8RGsgrHZk4CUtFqNUD1OFRsnzPb/hUC9BKQgFzE4FS5IOazk111NQKCWZ
-  I/dVqWjVEa1NVI9sBY6Q0ixw8mVBS4aHr5FPLf0SWeUHIfbnZF9721NYlsGjFe0s
-  9wIDAQAB
-  -----END PUBLIC KEY-----`,
-    "pkcs8-public-pem",
-    {
-      environment: 'node',
-      encryptionScheme: 'pkcs1',
-      signingScheme: 'pkcs1-sha512'
-    }
-  );
-  console.log(
-    key.verify(
-      '{"Description":"Client Account Balance","Authority":"Wise Wolves Group","Client":null,"Timestamp":"2021-02-18T02:57:15.8324757+00:00","Currency":"EUR","Amount":284.85}',
-      Buffer.from(
-        "ExyIM+H4nBHZFxjcAWblB3Z5lq+7B6+N/GDuP0wYTJRcmhP54X7ADzB3J9+BMQT9LAdpV0u1JtI0bvwUedrpOnyi36HDkXMlNV2fpVHJQAq/TxNmOv+eyA1bYuMlt+YHwtAKm194yg7NqiBrXNKjScrL+yrIHxytCKiAwhgosiGVRV1t48ORCaj5HLqQW+1KQoGXYvJFystRns1+acEiGLkLJYtZxA5FP0c8ej3vhc+gV+crPQWAIPlsImGuGI920U1SX8sMWOhH+QUatjtMZVDfsqYmCMFY1k/HLSv4y/teCOTtQrL6800LYT76Wbc33Brrqt2tMGJS8dOPJhD9DQ==",
-        "base64"
-      )
-    )
-  );
-  */
-
   const web3 = Web3Provider.create(config.blockchain);
   const network = new Web3Provider.Network(web3, args.network);
   const templateEngine = new TemplateEngine.FileTemplateLoader(
