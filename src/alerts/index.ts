@@ -144,8 +144,6 @@ export async function protocolBalance(
     template,
   }: Config.ProtocolBalanceConfig
 ) {
-  console.log('protocolBalance')
-  /*
   const stableTokenContract = await network.createContractById(stableToken);
   const collateralContract = await network.createContractById(collateral);
 
@@ -162,7 +160,6 @@ export async function protocolBalance(
     balance,
     totalSupply,
   });
-  */
 }
 
 export async function ethBalance(
