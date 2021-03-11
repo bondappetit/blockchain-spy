@@ -36,7 +36,7 @@ export namespace TemplateEngine {
           return asset.symbol;
         },
         network: {
-          etherscan: network.network.networkUrl,
+          etherscan: network.network.networkEtherscan,
         },
         ...data,
       });
