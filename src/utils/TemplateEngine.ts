@@ -51,7 +51,7 @@ export namespace TemplateEngine {
         tx: {
           hash: event.transactionHash,
           block: event.blockNumber,
-          view: `${network.network.networkUrl}/tx/${event.transactionHash}`,
+          view: `${network.network.networkEtherscan}/tx/${event.transactionHash}`,
         },
         contract: {
           address: event.address,
