@@ -10,7 +10,7 @@
   "author": "BondAppetit",
   "license": "MIT",
   "dependencies": {
-    "@bondappetit/networks": "^1.9.5",
+    "@bondappetit/networks": "^1.9.7",
     "@types/mustache": "^4.1.1",
     "@types/node": "^14.14.30",
     "@types/node-rsa": "^1.1.0",
