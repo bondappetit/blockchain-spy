@@ -1,5 +1,4 @@
 import { resolve } from "path";
-import fs from "fs";
 import config from "../config";
 import { parse } from "ts-command-line-args";
 import * as tg from "type-guards";
@@ -15,7 +14,6 @@ import {
 import * as Models from "./models";
 import * as Alerts from "./alerts";
 import Mustache from "mustache";
-import NodeRSA from "node-rsa";
 
 const isConfig = tg.isOfShape({
   logInterval: tg.isNumber,

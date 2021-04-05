@@ -4,7 +4,7 @@ export default {
   logInterval: 5000,
   alertInterval: 50000,
   blockchain: {
-    url: process.env.NODE_URL,
+    url: process.env.NODE_URL || '',
   },
   logger: [
     {
