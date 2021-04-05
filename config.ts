@@ -4,7 +4,7 @@ export default {
   logInterval: 5000,
   alertInterval: 50000,
   blockchain: {
-    url: "ws://mainnet.bondappetit.io:8545",
+    url: process.env.NODE_URL,
   },
   logger: [
     {
