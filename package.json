@@ -4,7 +4,7 @@
   "description": "Blockchain",
   "main": "src/index.ts",
   "scripts": {
-    "start": "npm ci && ts-node src/index.ts",
+    "start": "ts-node src/index.ts",
     "dev": "ts-node src/index.ts"
   },
   "author": "BondAppetit",
