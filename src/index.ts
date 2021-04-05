@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import fs from "fs";
+import config from "../config";
 import { parse } from "ts-command-line-args";
 import * as tg from "type-guards";
 import knex from "knex";
@@ -16,27 +17,6 @@ import * as Alerts from "./alerts";
 import Mustache from "mustache";
 import NodeRSA from "node-rsa";
 
-Mustache.escape = (text: string) => text;
-
-interface Args {
-  config: string;
-  network: string;
-}
-const args = parse<Args>({
-  config: {
-    type: String,
-    alias: "c",
-    description: "Path to config file",
-    defaultValue: resolve(__dirname, "../config.json"),
-  },
-  network: {
-    type: String,
-    alias: "n",
-    description: "Network name",
-    defaultValue: "development",
-  },
-});
-
 const isConfig = tg.isOfShape({
   logInterval: tg.isNumber,
   alertInterval: tg.isNumber,
@@ -45,13 +25,23 @@ const isConfig = tg.isOfShape({
   events: EventListener.Config.isConfig,
   alerts: tg.isArrayOf(Alerts.Config.isConfig),
 });
+if (!isConfig(config)) throw new Error("Invalid config data");
 
-fs.readFile(args.config, { encoding: "utf8" }, async (err, config) => {
-  if (err) throw new Error(`Config "${args.config}" not found`);
+Mustache.escape = (text: string) => text;
 
-  config = JSON.parse(config);
-  if (!isConfig(config)) throw new Error("Invalid config data");
+interface Args {
+  network: string;
+}
+const args = parse<Args>({
+  network: {
+    type: String,
+    alias: "n",
+    description: "Network name",
+    defaultValue: "development",
+  },
+});
 
+async function main() {
   const database = knex({
     client: "sqlite3",
     useNullAsDefault: true,
@@ -125,4 +115,9 @@ fs.readFile(args.config, { encoding: "utf8" }, async (err, config) => {
   ).forEach((handler) => handler());
 
   setInterval(logQueue.handle.bind(logQueue), config.logInterval);
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
 });
