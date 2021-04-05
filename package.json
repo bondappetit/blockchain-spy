@@ -4,7 +4,7 @@
   "description": "Blockchain",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts --network mainnet",
+    "start": "ts-node src/index.ts --network main",
     "ropsten": "ts-node src/index.ts --network ropsten",
     "dev": "ts-node src/index.ts"
   },
