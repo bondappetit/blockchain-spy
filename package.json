@@ -4,7 +4,8 @@
   "description": "Blockchain",
   "main": "src/index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/index.ts --network mainnet",
+    "ropsten": "ts-node src/index.ts --network ropsten",
     "dev": "ts-node src/index.ts"
   },
   "author": "BondAppetit",
