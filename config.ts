@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 export default {
-  logInterval: 5000,
+  logInterval: 60000,
   alertInterval: 50000,
   blockchain: {
     url: process.env.NODE_URL || '',

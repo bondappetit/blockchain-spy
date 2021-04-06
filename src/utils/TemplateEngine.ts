@@ -35,6 +35,10 @@ export namespace TemplateEngine {
 
           return asset.symbol;
         },
+        float: () => (text: string, render: any) => {
+          const [amount, decimals] = render(text).split(" ");
+          return new BN(amount).div(new BN(10).pow(decimals)).toString();
+        },
         network: {
           etherscan: network.network.networkEtherscan,
         },
