@@ -11,7 +11,7 @@ export namespace Web3Provider {
   export type Config = tg.FromGuard<typeof isConfig>;
 
   export function create({ url }: Config) {
-    return new Web3(url);
+    return new Web3.providers.WebsocketProvider(url);
   }
 
   export function isNetwork(network: any): network is keyof typeof networks {
