@@ -34,7 +34,7 @@ export namespace Web3Provider {
 
     findAsset(address: string) {
       return Object.values(this.network.assets).find(
-        (contract) => address === contract.address
+        (contract) => address.toLowerCase() === contract.address.toLowerCase()
       );
     }
 
@@ -52,7 +52,7 @@ export namespace Web3Provider {
 
     findContract(address: string) {
       return Object.values(this.network.contracts).find(
-        (contract) => address === contract.address
+        (contract) => address.toLowerCase() === contract.address.toLowerCase()
       );
     }
 
