@@ -14,6 +14,7 @@ import {
 import * as Models from "./models";
 import * as Alerts from "./alerts";
 import Mustache from "mustache";
+import Web3 from "web3";
 
 const isConfig = tg.isOfShape({
   logInterval: tg.isNumber,
@@ -53,7 +54,9 @@ async function main() {
     cache: Models.Cache.migration,
   });
   const cache = new Models.Cache.CacheService(database);
-  const web3 = Web3Provider.create(config.blockchain);
+  const web3Provider = Web3Provider.create(config.blockchain);
+  const web3 = new Web3(web3Provider);
+  web3Provider.on("end", () => process.exit(1));
   const network = new Web3Provider.Network(web3, args.network);
   const templateEngine = new TemplateEngine.FileTemplateLoader(
     TemplateEngine.networkRenderFactory(network, Mustache.render.bind(Mustache))
