@@ -81,6 +81,23 @@ export default {
         },
       ],
     },
+    {
+      contract: "UsdnGovLPStaking",
+      events: [
+        {
+          name: "Staked",
+          template: "events/StakingStaked.mustache",
+        },
+        {
+          name: "RewardPaid",
+          template: "events/StakingRewardPaid.mustache",
+        },
+        {
+          name: "Withdrawn",
+          template: "events/StakingWithdrawn.mustache",
+        },
+      ],
+    },
   ],
   alerts: [],
 };
