@@ -39,6 +39,13 @@ export namespace TemplateEngine {
           const [amount, decimals] = render(text).split(" ");
           return new BN(amount).div(new BN(10).pow(decimals)).toString();
         },
+        contractName: () => (text: string, render: any) => {
+          const contractAddress = render(text);
+          const contract = network.findContract(contractAddress);
+          if (contract === undefined) return contractAddress;
+
+          return contract.name;
+        },
         network: {
           etherscan: network.network.networkEtherscan,
         },

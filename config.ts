@@ -4,7 +4,7 @@ export default {
   logInterval: 60000,
   alertInterval: 50000,
   blockchain: {
-    url: process.env.NODE_URL || '',
+    url: process.env.NODE_URL || "",
   },
   logger: [
     {
@@ -47,8 +47,13 @@ export default {
         },
       ],
     },
-    {
-      contract: "UsdcStableLPLockStaking",
+    ...[
+      "UsdcStableLPLockStaking",
+      "UsdcGovLPStaking",
+      "UsdnGovLPStaking",
+      "UsdtGovLPStaking",
+    ].map((contract) => ({
+      contract,
       events: [
         {
           name: "Staked",
@@ -63,58 +68,7 @@ export default {
           template: "events/StakingWithdrawn.mustache",
         },
       ],
-    },
-    {
-      contract: "UsdcGovLPStaking",
-      events: [
-        {
-          name: "Staked",
-          template: "events/StakingStaked.mustache",
-        },
-        {
-          name: "RewardPaid",
-          template: "events/StakingRewardPaid.mustache",
-        },
-        {
-          name: "Withdrawn",
-          template: "events/StakingWithdrawn.mustache",
-        },
-      ],
-    },
-    {
-      contract: "UsdnGovLPStaking",
-      events: [
-        {
-          name: "Staked",
-          template: "events/StakingStaked.mustache",
-        },
-        {
-          name: "RewardPaid",
-          template: "events/StakingRewardPaid.mustache",
-        },
-        {
-          name: "Withdrawn",
-          template: "events/StakingWithdrawn.mustache",
-        },
-      ],
-    },
-    {
-      contract: "UsdtGovLPStaking",
-      events: [
-        {
-          name: "Staked",
-          template: "events/StakingStaked.mustache",
-        },
-        {
-          name: "RewardPaid",
-          template: "events/StakingRewardPaid.mustache",
-        },
-        {
-          name: "Withdrawn",
-          template: "events/StakingWithdrawn.mustache",
-        },
-      ],
-    },
+    })),
   ],
   alerts: [],
 };
