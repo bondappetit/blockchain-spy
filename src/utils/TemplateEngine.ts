@@ -75,23 +75,31 @@ export namespace TemplateEngine {
   }
 
   export class FileTemplateLoader {
-    protected cache: { [k: string]: string } = {};
+    protected cache: Map<string, string> = new Map();
 
     constructor(public readonly templateEngine: Render = templateEngine) {}
 
     async init(files: { [k: string]: string }) {
-      this.cache = await Object.entries(files).reduce(
-        async (cache, [k, path]) => ({
-          ...(await cache),
-          [k]: await fs.promises.readFile(path, "utf8"),
-        }),
-        Promise.resolve({})
+      this.cache = new Map(
+        await Promise.all(
+          Object.entries(files).map(async ([k, path]) => {
+            try {
+              await fs.promises.access(path, fs.constants.R_OK);
+              const content = await fs.promises.readFile(path, "utf8");
+
+              return [k, content] as [string, string];
+            } catch {
+              console.log("test");
+              throw new Error(`Template "${path}" not found`);
+            }
+          })
+        )
       );
     }
 
     render(template: string, data: any) {
-      const templateString = this.cache[template];
-      if (templateString === undefined) {
+      const templateString = this.cache.get(template);
+      if (!templateString) {
         throw new Error(`Template "${template}" not found`);
       }
 

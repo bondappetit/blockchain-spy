@@ -12,7 +12,7 @@ import {
   EventLogger,
 } from "./utils";
 import * as Models from "./models";
-import * as Alerts from "./alerts";
+import { createAlertHandlers } from "./alerts/index";
 import Mustache from "mustache";
 import Web3 from "web3";
 
@@ -22,7 +22,6 @@ const isConfig = tg.isOfShape({
   blockchain: Web3Provider.isConfig,
   logger: tg.isArrayOf(Logger.Config.isConfig),
   events: EventListener.Config.isConfig,
-  alerts: tg.isArrayOf(Alerts.Config.isConfig),
 });
 if (!isConfig(config)) throw new Error("Invalid config data");
 
@@ -56,7 +55,10 @@ async function main() {
   const cache = new Models.Cache.CacheService(database);
   const web3Provider = Web3Provider.create(config.blockchain);
   const web3 = new Web3(web3Provider);
-  web3Provider.on("end", () => process.exit(1));
+  web3Provider.on("end", () => {
+    console.error("ERROR: web3 disconnect");
+    process.exit(1);
+  });
   const network = new Web3Provider.Network(web3, args.network);
   const templateEngine = new TemplateEngine.FileTemplateLoader(
     TemplateEngine.networkRenderFactory(network, Mustache.render.bind(Mustache))
@@ -107,13 +109,16 @@ async function main() {
     await logQueue.push(eventRender(template, e));
   });
 
-  Alerts.createAlertHandlers(
+  const alertHandlers = createAlertHandlers(
     network,
     logQueue,
     render,
-    config.alertInterval,
     config.alerts
-  ).forEach((handler) => handler());
+  );
+  setInterval(
+    () => Promise.all(alertHandlers.map((handler) => handler())),
+    config.alertInterval
+  );
 
   setInterval(logQueue.handle.bind(logQueue), config.logInterval);
 }

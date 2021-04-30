@@ -1,8 +1,9 @@
 require("dotenv").config();
+import * as Alert from "./src/alerts/index";
 
 export default {
   logInterval: 60000,
-  alertInterval: 50000,
+  alertInterval: 120000,
   blockchain: {
     url: process.env.NODE_URL || "",
   },
@@ -70,5 +71,39 @@ export default {
       ],
     })),
   ],
-  alerts: [],
+  alerts: [
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDC", "BAG", "USDT"],
+        amountIn: `1${"0".repeat(6)}`,
+        condition: Alert.Condition.or(
+          Alert.Condition.gte(`12${"0".repeat(5)}`),
+          Alert.Condition.lte(`8${"0".repeat(5)}`)
+        ),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDC", "BAG", "USDN"],
+        amountIn: `1${"0".repeat(6)}`,
+        condition: Alert.Condition.or(
+          Alert.Condition.gte(`12${"0".repeat(5)}`),
+          Alert.Condition.lte(`8${"0".repeat(5)}`)
+        ),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDC", "USDap"],
+        amountIn: `1${"0".repeat(6)}`,
+        condition: Alert.Condition.gte(`11${"0".repeat(17)}`),
+      },
+    },
+  ] as Alert.Config[],
 };
