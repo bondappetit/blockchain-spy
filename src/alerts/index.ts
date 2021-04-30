@@ -12,7 +12,7 @@ export namespace Condition {
     predicates.reduce((res, predicate) => res && predicate(v), true);
 
   export const or = <T>(...predicates: Predicate<T>[]) => (v: any) =>
-    predicates.reduce((res, predicate) => res || predicate(v), true);
+    predicates.reduce((res, predicate) => res || predicate(v), false);
 
   export const gt = <T extends string | number>(max: T) => (v: T) =>
     new BigNumber(v).gt(max);

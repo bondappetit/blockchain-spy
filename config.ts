@@ -91,8 +91,8 @@ export default {
         path: ["USDC", "BAG", "USDN"],
         amountIn: `1${"0".repeat(6)}`,
         condition: Alert.Condition.or(
-          Alert.Condition.gte(`12${"0".repeat(5)}`),
-          Alert.Condition.lte(`8${"0".repeat(5)}`)
+          Alert.Condition.gte(`12${"0".repeat(17)}`),
+          Alert.Condition.lte(`8${"0".repeat(17)}`)
         ),
       },
     },
