@@ -157,9 +157,27 @@ export default {
       template: "alerts/uniswapArbitration.mustache",
       handler: {
         type: "uniswapArbitration",
+        path: ["USDap", "USDC"],
+        amountIn: `1000${"0".repeat(18)}`,
+        condition: Alert.Condition.gte(`1050${"0".repeat(6)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
         path: ["USDC", "USDap"],
         amountIn: `10000${"0".repeat(6)}`,
         condition: Alert.Condition.gte(`10050${"0".repeat(18)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDap", "USDC"],
+        amountIn: `10000${"0".repeat(18)}`,
+        condition: Alert.Condition.gte(`10050${"0".repeat(6)}`),
       },
     },
   ] as Alert.Config[],
