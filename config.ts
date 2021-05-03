@@ -77,11 +77,53 @@ export default {
       handler: {
         type: "uniswapArbitration",
         path: ["USDC", "BAG", "USDT"],
+        amountIn: `1000${"0".repeat(6)}`,
+        condition: Alert.Condition.gte(`1050${"0".repeat(6)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDT", "BAG", "USDC"],
+        amountIn: `1000${"0".repeat(6)}`,
+        condition: Alert.Condition.gte(`1050${"0".repeat(6)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDC", "BAG", "USDT"],
         amountIn: `10000${"0".repeat(6)}`,
-        condition: Alert.Condition.or(
-          Alert.Condition.gte(`10200${"0".repeat(6)}`),
-          Alert.Condition.lte(`9800${"0".repeat(6)}`)
-        ),
+        condition: Alert.Condition.gte(`10050${"0".repeat(6)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDT", "BAG", "USDC"],
+        amountIn: `10000${"0".repeat(6)}`,
+        condition: Alert.Condition.gte(`10050${"0".repeat(6)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDC", "BAG", "USDN"],
+        amountIn: `1000${"0".repeat(6)}`,
+        condition: Alert.Condition.gte(`1050${"0".repeat(18)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDN", "BAG", "USDC"],
+        amountIn: `1000${"0".repeat(18)}`,
+        condition: Alert.Condition.gte(`1050${"0".repeat(6)}`),
       },
     },
     {
@@ -90,10 +132,25 @@ export default {
         type: "uniswapArbitration",
         path: ["USDC", "BAG", "USDN"],
         amountIn: `10000${"0".repeat(6)}`,
-        condition: Alert.Condition.or(
-          Alert.Condition.gte(`10200${"0".repeat(18)}`),
-          Alert.Condition.lte(`9800${"0".repeat(18)}`)
-        ),
+        condition: Alert.Condition.gte(`10050${"0".repeat(18)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDN", "BAG", "USDC"],
+        amountIn: `10000${"0".repeat(18)}`,
+        condition: Alert.Condition.gte(`10050${"0".repeat(6)}`),
+      },
+    },
+    {
+      template: "alerts/uniswapArbitration.mustache",
+      handler: {
+        type: "uniswapArbitration",
+        path: ["USDC", "USDap"],
+        amountIn: `1000${"0".repeat(6)}`,
+        condition: Alert.Condition.gte(`1050${"0".repeat(18)}`),
       },
     },
     {
@@ -102,7 +159,7 @@ export default {
         type: "uniswapArbitration",
         path: ["USDC", "USDap"],
         amountIn: `10000${"0".repeat(6)}`,
-        condition: Alert.Condition.gte(`10200${"0".repeat(18)}`),
+        condition: Alert.Condition.gte(`10050${"0".repeat(18)}`),
       },
     },
   ] as Alert.Config[],
