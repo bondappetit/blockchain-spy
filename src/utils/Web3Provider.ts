@@ -1,36 +1,38 @@
-import * as tg from "type-guards";
 import Web3 from "web3";
 import networks from "@bondappetit/networks";
 import { AbiItem } from "web3-utils";
 
 export namespace Web3Provider {
-  export const isConfig = tg.isOfShape({
-    url: tg.isString,
-  });
-
-  export type Config = tg.FromGuard<typeof isConfig>;
-
-  export function create({ url }: Config) {
-    return new Web3.providers.WebsocketProvider(url);
+  export interface Config {
+    networkId: string | number;
+    host: string;
   }
 
-  export function isNetwork(network: any): network is keyof typeof networks {
-    return typeof network === "string" && networks.hasOwnProperty(network);
+  export function create({ networkId, host }: Config) {
+    const network = Object.values(networks).find(
+      (network) => network.networkId === parseInt(networkId.toString(), 10)
+    );
+    if (!network) {
+      throw new Error(`Invalid network "${networkId}"`);
+    }
+
+    return new Network(new Web3(host), network);
+  }
+
+  export function createMap(networks: Config[]) {
+    return new Map(
+      networks.map((network) => [
+        parseInt(network.networkId.toString(), 10),
+        create(network),
+      ])
+    );
   }
 
   export class Network {
     constructor(
       public readonly web3: Web3 = web3,
-      public readonly networkName: string = networkName
+      public readonly network: typeof networks.main = network
     ) {}
-
-    get network() {
-      if (!isNetwork(this.networkName)) {
-        throw new Error(`Invalid network "${this.networkName}"`);
-      }
-
-      return networks[this.networkName];
-    }
 
     findAsset(address: string) {
       return Object.values(this.network.assets).find(

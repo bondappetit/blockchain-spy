@@ -13,13 +13,18 @@ export namespace TemplateEngine {
   }
 
   export function networkRenderFactory(
+    networks: Map<number, Web3Provider.Network>,
     network: Web3Provider.Network,
     render: Render
   ) {
     return (template: string, data: any) =>
       render(template, {
         amount: () => (text: string, render: any) => {
-          const [amount, assetId] = render(text).split(" ");
+          const [amount, assetId, networkId] = render(text).split(" ");
+          if (networkId) {
+            network =
+              networks.get(parseInt(networkId.toString(), 10)) ?? network;
+          }
           const asset =
             network.findAsset(assetId) || network.findAssetBySymbol(assetId);
           if (asset === undefined) return render(text);
@@ -28,7 +33,11 @@ export namespace TemplateEngine {
             .toString()} ${asset.symbol}`;
         },
         assetSymbol: () => (text: string, render: any) => {
-          const assetId = render(text);
+          const [assetId, networkId] = render(text).split(" ");
+          if (networkId) {
+            network =
+              networks.get(parseInt(networkId.toString(), 10)) ?? network;
+          }
           const asset =
             network.findAsset(assetId) || network.findAssetBySymbol(assetId);
           if (asset === undefined) return assetId;
@@ -40,7 +49,11 @@ export namespace TemplateEngine {
           return new BN(amount).div(new BN(10).pow(decimals)).toString();
         },
         contractName: () => (text: string, render: any) => {
-          const contractAddress = render(text);
+          const [contractAddress, networkId] = render(text).split(" ");
+          if (networkId) {
+            network =
+              networks.get(parseInt(networkId.toString(), 10)) ?? network;
+          }
           const contract = network.findContract(contractAddress);
           if (contract === undefined) return contractAddress;
 

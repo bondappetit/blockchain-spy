@@ -42,7 +42,7 @@ export interface Config {
 }
 
 export function createAlertHandlers(
-  network: Web3Provider.Network,
+  networks: Map<number, Web3Provider.Network>,
   logQueue: EventLogger,
   render: TemplateEngine.Render,
   handlers: Config[]
@@ -53,7 +53,7 @@ export function createAlertHandlers(
   return handlers.map(({ template, def, handler }) => {
     if (handler.type === "uniswapArbitration") {
       return uniswapArbitration.handler(
-        network,
+        networks,
         pusher(template, def),
         handler
       );

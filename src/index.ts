@@ -14,12 +14,12 @@ import {
 import * as Models from "./models";
 import { createAlertHandlers } from "./alerts/index";
 import Mustache from "mustache";
+import networks from "@bondappetit/networks";
 import Web3 from "web3";
 
 const isConfig = tg.isOfShape({
   logInterval: tg.isNumber,
   alertInterval: tg.isNumber,
-  blockchain: Web3Provider.isConfig,
   logger: tg.isArrayOf(Logger.Config.isConfig),
   events: EventListener.Config.isConfig,
 });
@@ -39,7 +39,16 @@ const args = parse<Args>({
   },
 });
 
+function hasNetwork(networkName: string): networkName is keyof typeof networks {
+  return networks.hasOwnProperty(networkName);
+}
+
 async function main() {
+  if (!hasNetwork(args.network)) {
+    throw new Error(`Invalid network "${args.network}"`);
+  }
+  const currentNetwork = networks[args.network];
+
   const database = knex({
     client: "sqlite3",
     useNullAsDefault: true,
@@ -53,15 +62,29 @@ async function main() {
     cache: Models.Cache.migration,
   });
   const cache = new Models.Cache.CacheService(database);
-  const web3Provider = Web3Provider.create(config.blockchain);
-  const web3 = new Web3(web3Provider);
-  web3Provider.on("end", () => {
-    console.error("ERROR: web3 disconnect");
-    process.exit(1);
+  const web3map = Web3Provider.createMap(config.blockchain);
+  web3map.forEach((network) => {
+    const provider = network.web3.currentProvider;
+    if (!provider || !(provider instanceof Web3.providers.WebsocketProvider))
+      return;
+
+    provider.on("end", () => {
+      console.error(
+        `ERROR: web3 network "${network.network.networkId}" disconnect`
+      );
+      process.exit(1);
+    });
   });
-  const network = new Web3Provider.Network(web3, args.network);
+  const network = web3map.get(currentNetwork.networkId);
+  if (!network) throw new Error("Mainnet not connected");
+  const web3 = network.web3;
+
   const templateEngine = new TemplateEngine.FileTemplateLoader(
-    TemplateEngine.networkRenderFactory(network, Mustache.render.bind(Mustache))
+    TemplateEngine.networkRenderFactory(
+      web3map,
+      network,
+      Mustache.render.bind(Mustache)
+    )
   );
   await templateEngine.init({
     ...config.events.reduce(
@@ -110,7 +133,7 @@ async function main() {
   });
 
   const alertHandlers = createAlertHandlers(
-    network,
+    web3map,
     logQueue,
     render,
     config.alerts
