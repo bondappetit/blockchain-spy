@@ -1,18 +1,23 @@
-import { Web3Provider } from "../utils/Web3Provider";
 import * as uniswapArbitration from "./uniswapArbitration";
 import { EventLogger, TemplateEngine } from "../utils";
 import BigNumber from "bignumber.js";
 
 export namespace Condition {
   export interface Predicate<T> {
-    (v: T): boolean;
+    (v: T): boolean | Promise<boolean>;
   }
 
   export const and = <T>(...predicates: Predicate<T>[]) => (v: any) =>
-    predicates.reduce((res, predicate) => res && predicate(v), true);
+    predicates.reduce(
+      async (res, predicate) => (await res) && (await predicate(v)),
+      Promise.resolve(true)
+    );
 
   export const or = <T>(...predicates: Predicate<T>[]) => (v: any) =>
-    predicates.reduce((res, predicate) => res || predicate(v), false);
+    predicates.reduce(
+      async (res, predicate) => (await res) || (await predicate(v)),
+      Promise.resolve(false)
+    );
 
   export const gt = <T extends string | number>(max: T) => (v: T) =>
     new BigNumber(v).gt(max);
@@ -36,13 +41,12 @@ export interface Pusher {
 }
 
 export interface Config {
-  handler: uniswapArbitration.HandlerConfig; 
+  handler: uniswapArbitration.HandlerConfig;
   template: string;
-  def: Alert;
+  def?: Alert;
 }
 
 export function createAlertHandlers(
-  networks: Map<number, Web3Provider.Network>,
   logQueue: EventLogger,
   render: TemplateEngine.Render,
   handlers: Config[]
@@ -50,13 +54,9 @@ export function createAlertHandlers(
   const pusher = (template: string, def: Alert) => (alert: Alert) =>
     logQueue.push(render(template, { ...def, ...alert }));
 
-  return handlers.map(({ template, def, handler }) => {
+  return handlers.map(({ template, def = {}, handler }) => {
     if (handler.type === "uniswapArbitration") {
-      return uniswapArbitration.handler(
-        networks,
-        pusher(template, def),
-        handler
-      );
+      return uniswapArbitration.handler(pusher(template, def), handler);
     }
 
     return () => {};
