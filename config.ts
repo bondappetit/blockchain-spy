@@ -93,6 +93,15 @@ export default {
         },
       ],
     },
+    {
+      contract: "BuybackDepositaryBalanceView",
+      events: [
+        {
+          name: "Buyback",
+          template: "events/BuybackDepositaryBalanceViewBuyback.mustache",
+        },
+      ],
+    },
     ...[
       "UsdcStableLPLockStaking",
       "UsdcGovLPStaking",
