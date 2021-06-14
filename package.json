@@ -11,7 +11,7 @@
   "author": "BondAppetit",
   "license": "MIT",
   "dependencies": {
-    "@bondappetit/networks": "^2.0.6",
+    "@bondappetit/networks": "2.0.8",
     "@types/mustache": "^4.1.1",
     "@types/node": "^14.14.30",
     "@types/node-rsa": "^1.1.0",

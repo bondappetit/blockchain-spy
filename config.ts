@@ -48,6 +48,10 @@ export default {
       host: process.env.ETH_NODE ?? "",
     },
     {
+      networkId: networks.ropsten.networkId,
+      host: process.env.ETH_ROPSTEN_NODE ?? "",
+    },
+    {
       networkId: networks.mainBSC.networkId,
       host: process.env.BSC_NODE ?? "",
     },
