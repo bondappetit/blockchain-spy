@@ -111,6 +111,7 @@ export default {
       "UsdcGovLPStaking",
       "UsdnGovLPStaking",
       "UsdtGovLPStaking",
+      "StableGovLPStaking",
     ].map((contract) => ({
       contract,
       events: [
