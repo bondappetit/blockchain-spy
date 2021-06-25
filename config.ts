@@ -142,7 +142,7 @@ export default {
           },
         ],
         amountIn: `1000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`1050${"0".repeat(6)}`, 6, [
+        condition: AlertCondition.gteWithGas(`1100${"0".repeat(6)}`, 6, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -158,7 +158,7 @@ export default {
           },
         ],
         amountIn: `1000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`1050${"0".repeat(6)}`, 6, [
+        condition: AlertCondition.gteWithGas(`1100${"0".repeat(6)}`, 6, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -174,7 +174,7 @@ export default {
           },
         ],
         amountIn: `10000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`10050${"0".repeat(6)}`, 6, [
+        condition: AlertCondition.gteWithGas(`10200${"0".repeat(6)}`, 6, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -190,7 +190,7 @@ export default {
           },
         ],
         amountIn: `10000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`10050${"0".repeat(6)}`, 6, [
+        condition: AlertCondition.gteWithGas(`10200${"0".repeat(6)}`, 6, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -206,7 +206,7 @@ export default {
           },
         ],
         amountIn: `1000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`1050${"0".repeat(18)}`, 18, [
+        condition: AlertCondition.gteWithGas(`1100${"0".repeat(18)}`, 18, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -222,7 +222,7 @@ export default {
           },
         ],
         amountIn: `1000${"0".repeat(18)}`,
-        condition: AlertCondition.gteWithGas(`1050${"0".repeat(6)}`, 6, [
+        condition: AlertCondition.gteWithGas(`1100${"0".repeat(6)}`, 6, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -238,7 +238,7 @@ export default {
           },
         ],
         amountIn: `10000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`10050${"0".repeat(18)}`, 18, [
+        condition: AlertCondition.gteWithGas(`10200${"0".repeat(18)}`, 18, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -254,39 +254,7 @@ export default {
           },
         ],
         amountIn: `10000${"0".repeat(18)}`,
-        condition: AlertCondition.gteWithGas(`10050${"0".repeat(6)}`, 6, [
-          { networkId: networks.main.networkId, gasLimit: 258067 },
-        ]),
-      },
-    },
-    {
-      template: "alerts/uniswapArbitration.mustache",
-      handler: {
-        type: "uniswapArbitration",
-        path: [
-          {
-            network: networks.main.networkId,
-            path: ["USDC", "USDap"],
-          },
-        ],
-        amountIn: `1000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`1050${"0".repeat(18)}`, 18, [
-          { networkId: networks.main.networkId, gasLimit: 258067 },
-        ]),
-      },
-    },
-    {
-      template: "alerts/uniswapArbitration.mustache",
-      handler: {
-        type: "uniswapArbitration",
-        path: [
-          {
-            network: networks.main.networkId,
-            path: ["USDap", "USDC"],
-          },
-        ],
-        amountIn: `1000${"0".repeat(18)}`,
-        condition: AlertCondition.gteWithGas(`1050${"0".repeat(6)}`, 6, [
+        condition: AlertCondition.gteWithGas(`10200${"0".repeat(6)}`, 6, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -302,7 +270,7 @@ export default {
           },
         ],
         amountIn: `10000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`10050${"0".repeat(18)}`, 18, [
+        condition: AlertCondition.gteWithGas(`10200${"0".repeat(18)}`, 18, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -318,7 +286,7 @@ export default {
           },
         ],
         amountIn: `10000${"0".repeat(18)}`,
-        condition: AlertCondition.gteWithGas(`10050${"0".repeat(6)}`, 6, [
+        condition: AlertCondition.gteWithGas(`10200${"0".repeat(6)}`, 6, [
           { networkId: networks.main.networkId, gasLimit: 258067 },
         ]),
       },
@@ -338,7 +306,7 @@ export default {
           },
         ],
         amountIn: `1000${"0".repeat(6)}`,
-        condition: AlertCondition.gteWithGas(`1050${"0".repeat(18)}`, 18, [
+        condition: AlertCondition.gteWithGas(`1100${"0".repeat(18)}`, 18, [
           {
             networkId: networks.main.networkId,
             gasLimit: 258067,
@@ -365,7 +333,7 @@ export default {
           },
         ],
         amountIn: `1000${"0".repeat(18)}`,
-        condition: AlertCondition.gteWithGas(`1050${"0".repeat(6)}`, 6, [
+        condition: AlertCondition.gteWithGas(`1100${"0".repeat(6)}`, 6, [
           {
             networkId: networks.mainBSC.networkId,
             gasLimit: 258067,
