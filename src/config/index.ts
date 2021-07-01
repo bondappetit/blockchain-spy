@@ -77,11 +77,21 @@ export default {
             },
           ],
         },
+        {
+          contract: "BuybackDepositaryBalanceView",
+          events: [
+            {
+              name: "Buyback",
+              template: "events/BuybackDepositaryBalanceViewBuyback.mustache",
+            },
+          ],
+        },
         ...[
           "UsdcStableLPLockStaking",
           "UsdcGovLPStaking",
           "UsdnGovLPStaking",
           "UsdtGovLPStaking",
+          "StableGovLPStaking",
         ].map(stakingEvent),
       ],
     },
@@ -89,7 +99,6 @@ export default {
       networkId: networks.mainBSC.networkId,
       node: process.env.BSC_NODE ?? "",
       events: [],
-      // events: [...["BnbGovLPStaking"].map(stakingEvent)],
     },
   ] as ChainConfig[],
   alerts,
