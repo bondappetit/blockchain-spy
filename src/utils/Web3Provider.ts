@@ -21,10 +21,12 @@ export namespace Web3Provider {
 
   export function createMap(networks: Config[]) {
     return new Map(
-      networks.map((network) => [
-        parseInt(network.networkId.toString(), 10),
-        create(network),
-      ])
+      networks
+        .filter((network) => network.host !== "")
+        .map((network) => [
+          parseInt(network.networkId.toString(), 10),
+          create(network),
+        ])
     );
   }
 
